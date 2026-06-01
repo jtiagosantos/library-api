@@ -14,5 +14,14 @@ class UsersApi < Api
       users = Users::ListUsersService.new.call
       { data: users }
     end
+
+    desc "Search a user by id"
+    params do
+      requires :id, type: Integer, desc: "User's ID"
+    end
+    get "/:id" do
+      user = Users::SearchUserByIdService.new.call(params[:id])
+      { data: user }
+    end
   end
 end

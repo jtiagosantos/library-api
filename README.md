@@ -10,7 +10,7 @@
 - [x] Listar usuários
   - Endpoint: `GET /api/v1/users`
 
-- [ ] Buscar usuário por id
+- [x] Buscar usuário por id
   - Endpoint: `GET /api/v1/users/:id`
 
 - [ ] Atualizar usuário
