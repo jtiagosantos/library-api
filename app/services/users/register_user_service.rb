@@ -4,15 +4,11 @@ class Users::RegisterUserService
   def call(params)
     invalidStatus = params[:status] && !ALLOWD_STATUS.include?(params[:status])
 
-    if invalidStatus
-      raise Users::InvalidUserStatusError.new
-    end
+    raise Users::InvalidUserStatusError.new if invalidStatus
 
     usersExists = User.find_by(email: params[:email])
 
-    if usersExists
-      raise Users::UserAlreadyRegisteredError.new
-    end
+    raise Users::UserAlreadyRegisteredError.new if usersExists
 
     User.create!(
       username: params[:username],
