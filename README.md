@@ -7,7 +7,7 @@
 - [x] Criar usuário
   - Endpoint: `POST /api/v1/users/register`
 
-- [ ] Listar usuários
+- [x] Listar usuários
   - Endpoint: `GET /api/v1/users`
 
 - [ ] Buscar usuário por id

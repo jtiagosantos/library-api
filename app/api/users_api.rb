@@ -8,5 +8,11 @@ class UsersApi < Api
     post "/register" do
       Users::RegisterUserService.new.call(params)
     end
+
+    desc "List all registered users"
+    get "/" do
+      users = Users::ListUsersService.new.call
+      { data: users }
+    end
   end
 end
