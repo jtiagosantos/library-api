@@ -6,7 +6,7 @@ class Users::RegisterUserService
 
     raise Users::InvalidUserStatusError.new if invalidStatus
 
-    usersExists = User.find_by(email: params[:email])
+    usersExists = User.exists?(email: params[:email])
 
     raise Users::EmailAlreadyRegisteredError.new if usersExists
 
