@@ -8,7 +8,7 @@ class Users::RegisterUserService
 
     usersExists = User.find_by(email: params[:email])
 
-    raise Users::UserAlreadyRegisteredError.new if usersExists
+    raise Users::EmailAlreadyRegisteredError.new if usersExists
 
     User.create!(
       username: params[:username],
