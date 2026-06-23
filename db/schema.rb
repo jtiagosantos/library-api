@@ -10,7 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_01_021027) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_01_030026) do
+  create_table "books", force: :cascade do |t|
+    t.integer "available_copies", null: false
+    t.datetime "created_at", null: false
+    t.string "description"
+    t.string "isbn", null: false
+    t.datetime "published_at", null: false
+    t.string "title", null: false
+    t.integer "total_copies", null: false
+    t.datetime "updated_at", null: false
+    t.index ["isbn"], name: "index_books_on_isbn", unique: true
+  end
+
+# Could not dump table "sqlite_stat1" because of following StandardError
+#   Unknown type '' for column 'idx'
+
+
+# Could not dump table "sqlite_stat4" because of following StandardError
+#   Unknown type '' for column 'idx'
+
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", null: false

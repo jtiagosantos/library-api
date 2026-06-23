@@ -8,4 +8,5 @@ class Api < Grape::API
   end
 
   mount UsersApi
+  mount BooksApi
 end

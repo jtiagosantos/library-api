@@ -13,14 +13,11 @@
 - [x] Buscar usuário por id
   - Endpoint: `GET /api/v1/users/:id`
 
-- [ ] Atualizar usuário
-  - Endpoint: `PATCH /api/v1/users/:id`
-
 ---
 
 ### Livros
 
-- [ ] Criar livro
+- [x] Criar livro
   - Endpoint: `POST /api/v1/books`
 
 - [ ] Listar livros
@@ -66,14 +63,12 @@
 
 ## Livros
 
-- [ ] O título deve ser obrigatório
-- [ ] O ISBN deve ser obrigatório
-- [ ] O ISBN deve ser único
-- [ ] `total_copies` deve ser maior que zero
-- [ ] Ao criar um livro:
-  - `available_copies <= total_copies`
-- [ ] `available_copies` não pode ser negativo
-- [ ] `available_copies` não pode ser maior que `total_copies`
+- [x] O título deve ser obrigatório
+- [x] O ISBN deve ser obrigatório
+- [x] O ISBN deve ser único
+- [x] `total_copies` deve ser maior que zero
+- [x] `available_copies` não pode ser negativo
+- [x] `available_copies` não pode ser maior que `total_copies`
 
 ---
 
@@ -87,7 +82,8 @@
 - [ ] O livro deve possuir ao menos uma cópia disponível
 - [ ] O usuário não pode possuir mais de **3 empréstimos ativos**
 - [ ] O usuário não pode pegar o mesmo livro duas vezes ao mesmo tempo
-- [ ] O usuário não pode criar novo empréstimo se possuir empréstimo vencido em aberto
+- [ ] O usuário não pode criar novo empréstimo se possuir empréstimo vencido em
+      aberto
 
 ### Ao criar empréstimo
 
@@ -98,7 +94,8 @@
 
 - [ ] Decrementar `available_copies` do livro
 
-- [ ] A criação do empréstimo e a atualização do livro devem acontecer em **transação**
+- [ ] A criação do empréstimo e a atualização do livro devem acontecer em
+      **transação**
 
 ---
 
@@ -167,3 +164,4 @@
 {
   "data": {}
 }
+```
