@@ -17,5 +17,13 @@ class BooksApi < Api
     get "/" do
       Books::ListBooksService.new.call
     end
+
+    desc "Search a book by id"
+    params do
+      requires :id, type: Integer, desc: "Book ID"
+    end
+    get "/:id" do
+      Books::SearchBookByIdService.new.call(params[:id])
+    end
   end
 end

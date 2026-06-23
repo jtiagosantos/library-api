@@ -23,7 +23,7 @@
 - [x] Listar livros
   - Endpoint: `GET /api/v1/books`
 
-- [ ] Buscar livro por id
+- [x] Buscar livro por id
   - Endpoint: `GET /api/v1/books/:id`
 
 - [ ] Atualizar livro
