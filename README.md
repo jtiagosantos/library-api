@@ -20,7 +20,7 @@
 - [x] Criar livro
   - Endpoint: `POST /api/v1/books`
 
-- [ ] Listar livros
+- [x] Listar livros
   - Endpoint: `GET /api/v1/books`
 
 - [ ] Buscar livro por id

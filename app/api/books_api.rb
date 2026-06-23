@@ -12,5 +12,10 @@ class BooksApi < Api
     post "/register" do
       Books::RegisterBookService.new.call(params)
     end
+
+    desc "List all registered books"
+    get "/" do
+      Books::ListBooksService.new.call
+    end
   end
 end
