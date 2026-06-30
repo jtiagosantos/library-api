@@ -8,5 +8,10 @@ class LoansApi < Api
     post do
       Loans::LendABookService.new.call(params)
     end
+
+    desc "List all loans"
+    get do
+      Loans::ListLoansService.new.call
+    end
   end
 end
