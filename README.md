@@ -33,13 +33,13 @@
 
 ### Empréstimos
 
-- [ ] Criar empréstimo
+- [x] Criar empréstimo
   - Endpoint: `POST /api/v1/loans`
 
 - [ ] Devolver livro
   - Endpoint: `PATCH /api/v1/loans/:id/return`
 
-- [ ] Listar empréstimos
+- [x] Listar empréstimos
   - Endpoint: `GET /api/v1/loans`
 
 - [ ] Buscar empréstimo por id
@@ -87,14 +87,14 @@
 
 ### Ao criar empréstimo
 
-- [ ] Criar registro com:
+- [x] Criar registro com:
   - `borrowed_at = now`
   - `due_date = now + 7 dias`
   - `status = active`
 
-- [ ] Decrementar `available_copies` do livro
+- [x] Decrementar `available_copies` do livro
 
-- [ ] A criação do empréstimo e a atualização do livro devem acontecer em
+- [x] A criação do empréstimo e a atualização do livro devem acontecer em
       **transação**
 
 ---
