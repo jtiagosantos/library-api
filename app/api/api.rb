@@ -9,4 +9,5 @@ class Api < Grape::API
 
   mount UsersApi
   mount BooksApi
+  mount LoansApi
 end

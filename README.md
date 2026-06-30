@@ -76,13 +76,13 @@
 
 ### Regras para criar empréstimo
 
-- [ ] O usuário deve existir
-- [ ] O livro deve existir
-- [ ] O usuário deve estar com status `active`
-- [ ] O livro deve possuir ao menos uma cópia disponível
-- [ ] O usuário não pode possuir mais de **3 empréstimos ativos**
-- [ ] O usuário não pode pegar o mesmo livro duas vezes ao mesmo tempo
-- [ ] O usuário não pode criar novo empréstimo se possuir empréstimo vencido em
+- [x] O usuário deve existir
+- [x] O livro deve existir
+- [x] O usuário deve estar com status `active`
+- [x] O livro deve possuir ao menos uma cópia disponível
+- [x] O usuário não pode possuir mais de **3 empréstimos ativos**
+- [x] O usuário não pode pegar o mesmo livro duas vezes ao mesmo tempo
+- [x] O usuário não pode criar novo empréstimo se possuir empréstimo vencido em
       aberto
 
 ### Ao criar empréstimo
