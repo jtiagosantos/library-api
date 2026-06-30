@@ -1,8 +1,8 @@
 class Books::RegisterBookService
   def call(params)
-    bookExists = Book.exists?(isbn: params[:isbn])
+    existsBook = Book.exists?(isbn: params[:isbn])
 
-    raise Books::IsbnAlreadyRegisteredError.new if bookExists
+    raise Books::IsbnAlreadyRegisteredError.new if existsBook
 
     raise Books::TotalCopiesCannotBeLessThanZeroError.new if params[:total_copies] <= 0
 
