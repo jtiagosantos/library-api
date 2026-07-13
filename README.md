@@ -36,13 +36,13 @@
 - [x] Criar empréstimo
   - Endpoint: `POST /api/v1/loans`
 
-- [ ] Devolver livro
+- [x] Devolver livro
   - Endpoint: `PATCH /api/v1/loans/:id/return`
 
 - [x] Listar empréstimos
   - Endpoint: `GET /api/v1/loans`
 
-- [ ] Buscar empréstimo por id
+- [x] Buscar empréstimo por id
   - Endpoint: `GET /api/v1/loans/:id`
 
 ---
@@ -103,14 +103,14 @@
 
 ### Regras para devolver livro
 
-- [ ] O empréstimo deve existir
-- [ ] O empréstimo não pode estar devolvido
+- [x] O empréstimo deve existir
+- [x] O empréstimo não pode estar devolvido
 
 ### Ao devolver
 
-- [ ] Preencher `returned_at`
-- [ ] Alterar status para `returned`
-- [ ] Incrementar `available_copies`
+- [x] Preencher `returned_at`
+- [x] Alterar status para `returned`
+- [x] Incrementar `available_copies`
 
 ---
 
