@@ -21,5 +21,13 @@ class LoansApi < Api
     patch "/:id/return" do
       Loans::ReturnBookService.new.call(params)
     end
+
+    desc "Search a loan by ID"
+    params do
+      requires :id, type: Integer, desc: "Loan ID"
+    end
+    get "/:id" do
+      Loans::SearchLoanByIdService.new.call(params)
+    end
   end
 end
