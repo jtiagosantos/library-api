@@ -116,11 +116,11 @@
 
 ## Empréstimos vencidos
 
-- [ ] Se:
+- [x] Se:
   - `due_date < now`
   - `returned_at = nil`
 
-- [ ] Considerar empréstimo como `overdue`
+- [x] Considerar empréstimo como `overdue`
 
 ---
 
