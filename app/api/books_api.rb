@@ -25,5 +25,19 @@ class BooksApi < Api
     get "/:id" do
       Books::SearchBookByIdService.new.call(params[:id])
     end
+
+    desc "Update a book by id"
+    params do
+      requires :id, type: Integer, desc: "Book ID"
+      optional :title, type: String, desc: "Book title"
+      optional :isbn, type: String, desc: "Book ISBN"
+      optional :description, type: String, desc: "Book description"
+      optional :total_copies, type: Integer, desc: "Total number of copies"
+      optional :available_copies, type: Integer, desc: "Number of available copies"
+      optional :published_at, type: DateTime, desc: "Publication date"
+    end
+    put "/:id" do
+      Books::UpdateBookService.new.call(params)
+    end
   end
 end
