@@ -139,7 +139,7 @@
 
 ### Ordenação
 
-- [ ] Suportar:
+- [x] Suportar:
   - `sort=title`
   - `sort=created_at`
   - `sort=published_at`

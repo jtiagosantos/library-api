@@ -11,7 +11,7 @@ class UsersApi < Api
 
     desc "List all registered users"
     get "/" do
-      users = Users::ListUsersService.new.call
+      users = Users::ListUsersService.new.call(params)
       { data: users }
     end
 

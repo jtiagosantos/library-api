@@ -27,38 +27,18 @@ puts "  #{users.size} users ready."
 
 puts "Seeding books..."
 
+now = Time.current
+
 books_data = [
+  # -- Registered 12 months ago --------------------------------------------------
   {
     title: "Domain-Driven Design",
     isbn: "978-0-321-12521-7",
     description: "Tackling complexity in the heart of software.",
     total_copies: 3,
     available_copies: 3,
-    published_at: Date.new(2003, 8, 22)
-  },
-  {
-    title: "Clean Code",
-    isbn: "978-0-132-35088-4",
-    description: "A handbook of agile software craftsmanship.",
-    total_copies: 5,
-    available_copies: 5,
-    published_at: Date.new(2008, 8, 1)
-  },
-  {
-    title: "Refactoring",
-    isbn: "978-0-201-48567-7",
-    description: "Improving the design of existing code.",
-    total_copies: 2,
-    available_copies: 2,
-    published_at: Date.new(1999, 7, 8)
-  },
-  {
-    title: "The Pragmatic Programmer",
-    isbn: "978-0-135-95705-9",
-    description: "Your journey to mastery.",
-    total_copies: 4,
-    available_copies: 4,
-    published_at: Date.new(2019, 9, 23)
+    published_at: Date.new(2003, 8, 22),
+    created_at: now - 12.months
   },
   {
     title: "Design Patterns",
@@ -66,7 +46,37 @@ books_data = [
     description: "Elements of reusable object-oriented software.",
     total_copies: 3,
     available_copies: 3,
-    published_at: Date.new(1994, 10, 31)
+    published_at: Date.new(1994, 10, 31),
+    created_at: now - 12.months
+  },
+  # -- Registered 6 months ago ---------------------------------------------------
+  {
+    title: "Clean Code",
+    isbn: "978-0-132-35088-4",
+    description: "A handbook of agile software craftsmanship.",
+    total_copies: 5,
+    available_copies: 5,
+    published_at: Date.new(2008, 8, 1),
+    created_at: now - 6.months
+  },
+  {
+    title: "Refactoring",
+    isbn: "978-0-201-48567-7",
+    description: "Improving the design of existing code.",
+    total_copies: 2,
+    available_copies: 2,
+    published_at: Date.new(1999, 7, 8),
+    created_at: now - 6.months
+  },
+  # -- Registered 3 months ago ---------------------------------------------------
+  {
+    title: "The Pragmatic Programmer",
+    isbn: "978-0-135-95705-9",
+    description: "Your journey to mastery.",
+    total_copies: 4,
+    available_copies: 4,
+    published_at: Date.new(2019, 9, 23),
+    created_at: now - 3.months
   },
   {
     title: "Eloquent Ruby",
@@ -74,18 +84,82 @@ books_data = [
     description: "The Ruby way of writing code.",
     total_copies: 2,
     available_copies: 2,
-    published_at: Date.new(2011, 2, 21)
+    published_at: Date.new(2011, 2, 21),
+    created_at: now - 3.months
+  },
+  # -- Registered 1 month ago ----------------------------------------------------
+  {
+    title: "Practical Object-Oriented Design in Ruby",
+    isbn: "978-0-321-72133-4",
+    description: "An agile primer on object-oriented design.",
+    total_copies: 3,
+    available_copies: 3,
+    published_at: Date.new(2012, 9, 5),
+    created_at: now - 1.month
+  },
+  {
+    title: "Clean Architecture",
+    isbn: "978-0-134-49416-6",
+    description: "A craftsman's guide to software structure and design.",
+    total_copies: 4,
+    available_copies: 4,
+    published_at: Date.new(2017, 9, 10),
+    created_at: now - 1.month
+  },
+  # -- Registered 2 weeks ago ----------------------------------------------------
+  {
+    title: "Metaprogramming Ruby 2",
+    isbn: "978-1-941-22212-6",
+    description: "Program like the Ruby pros.",
+    total_copies: 2,
+    available_copies: 2,
+    published_at: Date.new(2014, 8, 29),
+    created_at: now - 2.weeks
+  },
+  {
+    title: "Working Effectively with Legacy Code",
+    isbn: "978-0-131-17754-1",
+    description: "Strategies for working with large, untested code bases.",
+    total_copies: 3,
+    available_copies: 3,
+    published_at: Date.new(2004, 9, 22),
+    created_at: now - 2.weeks
+  },
+  # -- Registered 3 days ago -----------------------------------------------------
+  {
+    title: "Agile Web Development with Rails 7",
+    isbn: "978-1-680-50954-9",
+    description: "A pragmatic guide to modern Rails development.",
+    total_copies: 5,
+    available_copies: 5,
+    published_at: Date.new(2023, 4, 15),
+    created_at: now - 3.days
+  },
+  # -- Registered today ----------------------------------------------------------
+  {
+    title: "Ruby Under a Microscope",
+    isbn: "978-1-593-27527-3",
+    description: "An illustrated guide to Ruby internals.",
+    total_copies: 2,
+    available_copies: 2,
+    published_at: Date.new(2013, 11, 15),
+    created_at: now
   }
 ]
 
 books = books_data.map do |attrs|
-  Book.find_or_create_by!(isbn: attrs[:isbn]) do |b|
+  custom_created_at = attrs.delete(:created_at)
+
+  book = Book.find_or_create_by!(isbn: attrs[:isbn]) do |b|
     b.title            = attrs[:title]
     b.description      = attrs[:description]
     b.total_copies     = attrs[:total_copies]
     b.available_copies = attrs[:available_copies]
     b.published_at     = attrs[:published_at]
   end
+
+  book.update_columns(created_at: custom_created_at, updated_at: custom_created_at)
+  book
 end
 
 puts "  #{books.size} books ready."
@@ -95,9 +169,15 @@ puts "  #{books.size} books ready."
 puts "Seeding loans..."
 
 alice, bruno, carla, daniel = users[0], users[1], users[2], users[3]
-ddd, clean_code, refactoring, pragmatic, design_patterns, eloquent_ruby = *books
 
-now = Time.current
+books_by_isbn = books.index_by(&:isbn)
+ddd              = books_by_isbn["978-0-321-12521-7"]
+design_patterns  = books_by_isbn["978-0-201-63361-0"]
+clean_code       = books_by_isbn["978-0-132-35088-4"]
+refactoring      = books_by_isbn["978-0-201-48567-7"]
+pragmatic        = books_by_isbn["978-0-135-95705-9"]
+eloquent_ruby    = books_by_isbn["978-0-321-58410-6"]
+
 loans_created = 0
 
 # Helper – idempotent by (user, book, status). Adjusts available_copies only
