@@ -148,9 +148,9 @@
 
 ## Listagem de empréstimos
 
-- [ ] Filtrar por usuário
-- [ ] Filtrar por livro
-- [ ] Filtrar por status
+- [x] Filtrar por usuário
+- [x] Filtrar por livro
+- [x] Filtrar por status
 
 ---
 

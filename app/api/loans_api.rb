@@ -11,7 +11,7 @@ class LoansApi < Api
 
     desc "List all loans"
     get do
-      Loans::ListLoansService.new.call
+      Loans::ListLoansService.new.call(params)
     end
 
     desc "Return a book"
