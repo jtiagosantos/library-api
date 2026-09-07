@@ -15,7 +15,7 @@ class BooksApi < Api
 
     desc "List all registered books"
     get "/" do
-      Books::ListBooksService.new.call
+      Books::ListBooksService.new.call(params)
     end
 
     desc "Search a book by id"

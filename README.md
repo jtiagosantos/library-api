@@ -128,8 +128,8 @@
 
 ## Listagem de livros
 
-- [ ] Filtrar por título
-- [ ] Filtrar por ISBN
+- [x] Filtrar por título
+- [x] Filtrar por ISBN
 
 ### Paginação
 
