@@ -26,7 +26,7 @@
 - [x] Buscar livro por id
   - Endpoint: `GET /api/v1/books/:id`
 
-- [ ] Atualizar livro
+- [x] Atualizar livro
   - Endpoint: `PATCH /api/v1/books/:id`
 
 ---
@@ -133,7 +133,7 @@
 
 ### Paginação
 
-- [ ] Suportar:
+- [x] Suportar:
   - `page`
   - `per_page`
 
