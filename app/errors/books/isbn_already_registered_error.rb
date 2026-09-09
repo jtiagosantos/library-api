@@ -1,5 +1,5 @@
-class Books::IsbnAlreadyRegisteredError < BusinessError
+class Books::IsbnAlreadyRegisteredError < StandardError
   def initialize
-    super("ISBN already registered", code: :conflict)
+    super("ISBN already registered")
   end
 end

@@ -1,4 +1,6 @@
 class BooksApi < Api
+  helpers ::Helpers::ResponseHelper
+
   resource :books do
     desc "Register a new book"
     params do
@@ -10,12 +12,20 @@ class BooksApi < Api
       requires :published_at, type: DateTime, desc: "Publication date"
     end
     post "/register" do
-      Books::RegisterBookService.new.call(params)
+      Books::RegisterBookService.new.call(params) => { data:, errors: }
+
+      return render_failed(errors=errors) if errors.any?
+
+      render_success(data=data)
     end
 
     desc "List all registered books"
     get "/" do
-      Books::ListBooksService.new.call(params)
+      Books::ListBooksService.new.call(params) => { data:, errors: }
+
+      return render_failed(errors=errors) if errors.any?
+
+      render_success(data=data)
     end
 
     desc "Search a book by id"
@@ -23,7 +33,11 @@ class BooksApi < Api
       requires :id, type: Integer, desc: "Book ID"
     end
     get "/:id" do
-      Books::SearchBookByIdService.new.call(params[:id])
+      Books::SearchBookByIdService.new.call(params[:id]) => { data:, errors: }
+
+      return render_failed(errors=errors, status=:not_found) if errors.any?
+
+      render_success(data=data)
     end
 
     desc "Update a book by id"

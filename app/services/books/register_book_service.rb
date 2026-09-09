@@ -1,22 +1,33 @@
-class Books::RegisterBookService
+class Books::RegisterBookService < BaseService
   def call(params)
-    existsBook = Book.exists?(isbn: params[:isbn])
+    title = params[:title]
+    isbn = params[:isbn]
+    total_copies = params[:total_copies]
+    available_copies = params[:available_copies]
+    description = params[:description]
+    published_at = params[:published_at]
 
-    raise Books::IsbnAlreadyRegisteredError.new if existsBook
+    existsBook = Book.exists?(isbn: isbn)
 
-    raise Books::TotalCopiesCannotBeLessThanZeroError.new if params[:total_copies] <= 0
+    add_error(Books::IsbnAlreadyRegisteredError.new) if existsBook
 
-    raise Books::AvailableCopiesCannotBeGreaterThanTotalCopiesError.new if params[:available_copies] > params[:total_copies]
+    add_error(Books::TotalCopiesCannotBeLessThanZeroError.new) if total_copies <= 0
 
-    raise Books::AvailableCopiesCannotBeNegativeError.new if params[:available_copies] < 0
+    add_error(Books::AvailableCopiesCannotBeGreaterThanTotalCopiesError.new) if available_copies > total_copies
 
-    Book.create!(
-      title: params[:title],
-      isbn: params[:isbn],
-      description: params[:description],
-      total_copies: params[:total_copies],
-      available_copies: params[:available_copies],
-      published_at: params[:published_at]
+    add_error(Books::AvailableCopiesCannotBeNegativeError.new) if available_copies < 0
+
+    return failed if exists_error?
+
+    book = Book.create!(
+      title: title,
+      isbn: isbn,
+      description: description,
+      total_copies: total_copies,
+      available_copies: available_copies,
+      published_at: published_at
     )
+
+    success(book)
   end
 end

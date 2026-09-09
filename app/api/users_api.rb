@@ -12,7 +12,7 @@ class UsersApi < Api
 
       return render_failed(errors=errors) if errors.any?
 
-      render_success(data=data, status=201)
+      render_success(data=data, status=:created)
     end
 
     desc "List all registered users"

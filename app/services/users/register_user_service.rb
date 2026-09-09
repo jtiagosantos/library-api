@@ -2,8 +2,9 @@ class Users::RegisterUserService < BaseService
   ALLOWD_STATUS = [ "active", "blocked" ]
 
   def call(params)
-    status = params[:status]
+    status = params[:status] || "active"
     email = params[:email]
+    username = params[:username]
 
     add_error(Users::InvalidUserStatusError.new) if is_invalid_status?(status)
 
@@ -12,9 +13,9 @@ class Users::RegisterUserService < BaseService
     return failed if exists_error?
 
     user = User.create!(
-      username: params[:username],
-      email: params[:email],
-      status: params[:status] || "active"
+      username: username,
+      email: email,
+      status: status
     )
 
     success(user)

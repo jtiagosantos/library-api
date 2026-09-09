@@ -1,4 +1,4 @@
-class Books::ListBooksService
+class Books::ListBooksService < BaseService
   def call(params)
     title = params[:title]
     isbn = params[:isbn]
@@ -17,6 +17,6 @@ class Books::ListBooksService
     books = books.filter_by_title(title) if title.present?
     books = books.filter_by_isbn(isbn) if isbn.present?
 
-    books
+    success(books)
   end
 end

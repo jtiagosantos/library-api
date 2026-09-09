@@ -1,5 +1,5 @@
-class Books::TotalCopiesCannotBeLessThanZeroError < BusinessError
+class Books::TotalCopiesCannotBeLessThanZeroError < StandardError
   def initialize
-    super("Total copies cannot be less than zero", code: :unprocessable_entity)
+    super("Total copies cannot be less than zero")
   end
 end

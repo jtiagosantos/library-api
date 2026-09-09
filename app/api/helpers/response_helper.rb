@@ -1,5 +1,5 @@
 module Helpers::ResponseHelper
-  def render_success(data, status = 200, metadata = {})
+  def render_success(data, status = :ok, metadata = {})
     response = {
       data: data,
       errors: [],

@@ -1,5 +1,5 @@
-class Books::UnavailableBookError < BusinessError
+class Books::UnavailableBookError < StandardError
   def initialize
-    super("Book is unavailable", code: :unprocessable_entity)
+    super("Book is unavailable")
   end
 end
