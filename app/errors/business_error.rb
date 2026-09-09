@@ -1,8 +1,5 @@
 class BusinessError < StandardError
-  attr_reader :code
-
-  def initialize(message, code: :unprocessable_entity)
+  def initialize(message)
     super(message)
-    @code = code
   end
 end

@@ -1,4 +1,6 @@
 class UsersApi < Api
+  helpers ::Helpers::ResponseHelper
+
   resource :users do
     desc "Register a new user"
     params do
@@ -6,13 +8,20 @@ class UsersApi < Api
       requires :email, type: String, desc: "User's email"
     end
     post "/register" do
-      Users::RegisterUserService.new.call(params)
+      Users::RegisterUserService.new.call(params) => { data:, errors: }
+
+      return render_failed(errors=errors) if errors.any?
+
+      render_success(data=data, status=201)
     end
 
     desc "List all registered users"
     get "/" do
-      users = Users::ListUsersService.new.call(params)
-      { data: users }
+      users = Users::ListUsersService.new.call(params) => { data:, errors: }
+
+      return render_failed(errors=errors) if errors.any?
+
+      render_success(data=data)
     end
 
     desc "Search a user by id"
@@ -20,8 +29,11 @@ class UsersApi < Api
       requires :id, type: Integer, desc: "User's ID"
     end
     get "/:id" do
-      user = Users::SearchUserByIdService.new.call(params[:id])
-      { data: user }
+      Users::SearchUserByIdService.new.call(params[:id]) => { data:, errors: }
+
+      return render_failed(errors=errors, status=:not_found) if errors.any?
+
+      render_success(data=data)
     end
   end
 end

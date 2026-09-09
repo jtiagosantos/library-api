@@ -1,9 +1,11 @@
-class Users::SearchUserByIdService
+class Users::SearchUserByIdService < BaseService
   def call(id)
     user = User.find_by(id: id)
 
-    raise EntityNotFoundError.new unless user
+    add_error(EntityNotFoundError.new) unless user
 
-    user
+    return failed if exists_error?
+
+    success(user)
   end
 end

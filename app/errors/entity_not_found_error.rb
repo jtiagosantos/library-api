@@ -1,5 +1,5 @@
-class EntityNotFoundError < BusinessError
+class EntityNotFoundError < StandardError
   def initialize
-    super("Entity not found", code: :not_found)
+    super("Entity not found")
   end
 end

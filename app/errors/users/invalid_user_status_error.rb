@@ -1,5 +1,5 @@
-class Users::InvalidUserStatusError < BusinessError
+class Users::InvalidUserStatusError < StandardError
   def initialize
-    super("Invalid user status", code: :unprocessable_entity)
+    super("Invalid user status")
   end
 end

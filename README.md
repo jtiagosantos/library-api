@@ -162,6 +162,8 @@
 
 ```json
 {
-  "data": {}
+  "data": {},
+  "errors": [],
+  "metadata": {}
 }
 ```

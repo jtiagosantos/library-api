@@ -1,5 +1,5 @@
-class Users::EmailAlreadyRegisteredError < BusinessError
+class Users::EmailAlreadyRegisteredError < StandardError
   def initialize
-    super("Email already registered", code: :conflict)
+    super("Email already registered")
   end
 end

@@ -1,4 +1,4 @@
-class Users::ListUsersService
+class Users::ListUsersService < BaseService
   def call(params)
     sort_field = params[:sort_field] || "created_at"
     sort_dir = (params[:sort_dir] || "desc").upcase
@@ -7,9 +7,11 @@ class Users::ListUsersService
 
     offset = (page * per_page) - per_page
 
-    User
+    users = User
       .limit(per_page)
       .offset(offset)
       .order("#{sort_field} #{sort_dir}")
+
+    success(users)
   end
 end
