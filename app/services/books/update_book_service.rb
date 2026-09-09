@@ -1,25 +1,35 @@
-class Books::UpdateBookService
+class Books::UpdateBookService < BaseService
   def call(params)
-    book = Book.find_by(id: params[:id])
+    id = params[:id]
 
-    raise EntityNotFoundError.new unless book
+    book = Book.find_by(id: id)
 
-    data = { **params.except(:id), **book.attributes.symbolize_keys }
+    add_error(EntityNotFoundError.new) unless book
 
-    hash = params.except(:id).deep_symbolize_keys
+    return failed if exists_error?
 
-    p hash
+    updated_values = { **book.serializable_hash, **params.except(:id) }.symbolize_keys
 
-    book = Book.update!(
-      params[:id],
-      title: data[:title],
-      isbn: data[:isbn],
-      description: data[:description],
-      total_copies: data[:total_copies],
-      available_copies: data[:available_copies],
-      published_at: data[:published_at]
-    )
+    total_copies = updated_values[:total_copies]
+    available_copies = updated_values[:available_copies]
 
-    book
+    add_error(Books::TotalCopiesCannotBeLessThanZeroError.new) if total_copies <= 0
+
+    add_error(Books::AvailableCopiesCannotBeGreaterThanTotalCopiesError.new) if available_copies > total_copies
+
+    add_error(Books::AvailableCopiesCannotBeNegativeError.new) if available_copies < 0
+
+    return failed if exists_error?
+
+    book.title = updated_values[:title]
+    book.isbn = updated_values[:isbn]
+    book.description = updated_values[:description]
+    book.total_copies = updated_values[:total_copies]
+    book.available_copies = updated_values[:available_copies]
+    book.published_at = updated_values[:published_at]
+
+    book.save!
+
+    success(book)
   end
 end

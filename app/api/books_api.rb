@@ -51,7 +51,11 @@ class BooksApi < Api
       optional :published_at, type: DateTime, desc: "Publication date"
     end
     put "/:id" do
-      Books::UpdateBookService.new.call(params)
+      Books::UpdateBookService.new.call(params) => { data:, errors: }
+
+      return render_failed(errors=errors) if errors.any?
+
+      render_success(data=data)
     end
   end
 end
