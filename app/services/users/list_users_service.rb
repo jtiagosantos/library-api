@@ -1,16 +1,18 @@
 class Users::ListUsersService < BaseService
-  def call(params)
-    sort_field = params[:sort_field] || "created_at"
-    sort_dir = (params[:sort_dir] || "desc").upcase
-    page = (params[:page] || 1).to_i
-    per_page = (params[:per_page] || 10).to_i
+  include ::Helpers::SortingHelper
+  include ::Helpers::OrderingHelper
 
-    offset = (page * per_page) - per_page
+  ALLOWED_SORT_FIELDS = %w[username email created_at].freeze
+  ALLOWED_SORT_DIRS = %w[asc desc ASC DESC].freeze
+
+  def call(input)
+    make_sorting_values(input, ALLOWED_SORT_FIELDS, ALLOWED_SORT_DIRS) => { sort_field:, sort_dir: }
+    make_ordering_values(input) => { limit:, offset: }
 
     users = User
-      .limit(per_page)
+      .limit(limit)
       .offset(offset)
-      .order("#{sort_field} #{sort_dir}")
+      .order(Arel.sql("#{sort_field} #{sort_dir}"))
 
     success(users)
   end

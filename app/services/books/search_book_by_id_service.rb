@@ -1,5 +1,7 @@
 class Books::SearchBookByIdService < BaseService
-  def call(id)
+  def call(input)
+    id = input[:id]
+
     book = Book.find_by(id: id)
 
     add_error(EntityNotFoundError.new) unless book

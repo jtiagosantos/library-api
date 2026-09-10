@@ -1,6 +1,6 @@
 class Users::SearchUserByIdService < BaseService
-  def call(id)
-    id = params[:id]
+  def call(input)
+    id = input[:id]
 
     user = User.find_by(id: id)
 

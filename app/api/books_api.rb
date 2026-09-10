@@ -33,7 +33,7 @@ class BooksApi < Api
       requires :id, type: Integer, desc: "Book ID"
     end
     get "/:id" do
-      Books::SearchBookByIdService.new.call(params[:id]) => { data:, errors: }
+      Books::SearchBookByIdService.new.call(params) => { data:, errors: }
 
       return render_failed(errors=errors, status=:not_found) if errors.any?
 

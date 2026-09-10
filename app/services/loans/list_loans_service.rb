@@ -1,17 +1,20 @@
 class Loans::ListLoansService < BaseService
-  def call(params)
-    user_id = params[:user_id]
-    book_id = params[:book_id]
-    status = params[:status]
-    sort_field = params[:sort_field] || "created_at"
-    sort_dir = (params[:sort_dir] || "desc").upcase
-    page = (params[:page] || 1).to_i
-    per_page = (params[:per_page] || 10).to_i
+  include ::Helpers::SortingHelper
+  include ::Helpers::OrderingHelper
 
-    offset = (page * per_page) - per_page
+  ALLOWED_SORT_FIELDS = %w[borrowed_at due_date created_at].freeze
+  ALLOWED_SORT_DIRS = %w[asc desc ASC DESC].freeze
+
+  def call(input)
+    user_id = input[:user_id]
+    book_id = input[:book_id]
+    status = input[:status]
+
+    make_sorting_values(input, ALLOWED_SORT_FIELDS, ALLOWED_SORT_DIRS) => { sort_field:, sort_dir: }
+    make_ordering_values(input) => { limit:, offset: }
 
     loans = Loan
-      .limit(per_page)
+      .limit(limit)
       .offset(offset)
       .order("#{sort_field} #{sort_dir}")
 

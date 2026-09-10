@@ -1,6 +1,6 @@
 class Loans::SearchLoanByIdService < BaseService
-  def call(params)
-    id = params[:id]
+  def call(input)
+    id = input[:id]
 
     loan = Loan.find_by(id: id)
 

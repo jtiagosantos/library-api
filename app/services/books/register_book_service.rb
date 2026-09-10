@@ -1,11 +1,11 @@
 class Books::RegisterBookService < BaseService
-  def call(params)
-    title = params[:title]
-    isbn = params[:isbn]
-    total_copies = params[:total_copies]
-    available_copies = params[:available_copies]
-    description = params[:description]
-    published_at = params[:published_at]
+  def call(input)
+    title = input[:title]
+    isbn = input[:isbn]
+    total_copies = input[:total_copies]
+    available_copies = input[:available_copies]
+    description = input[:description]
+    published_at = input[:published_at]
 
     existsBook = Book.exists?(isbn: isbn)
 

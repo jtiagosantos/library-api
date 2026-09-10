@@ -1,16 +1,19 @@
 class Books::ListBooksService < BaseService
-  def call(params)
-    title = params[:title]
-    isbn = params[:isbn]
-    sort_field = params[:sort_field] || "created_at"
-    sort_dir = (params[:sort_dir] || "desc").upcase
-    page = (params[:page] || 1).to_i
-    per_page = (params[:per_page] || 10).to_i
+  include ::Helpers::SortingHelper
+  include ::Helpers::OrderingHelper
 
-    offset = (page * per_page) - per_page
+  ALLOWED_SORT_FIELDS = %w[title isbn published_at created_at].freeze
+  ALLOWED_SORT_DIRS = %w[asc desc ASC DESC].freeze
+
+  def call(input)
+    title = input[:title]
+    isbn = input[:isbn]
+
+    make_sorting_values(input, ALLOWED_SORT_FIELDS, ALLOWED_SORT_DIRS) => { sort_field:, sort_dir: }
+    make_ordering_values(input) => { limit:, offset: }
 
     books = Book
-      .limit(per_page)
+      .limit(limit)
       .offset(offset)
       .order("#{sort_field} #{sort_dir}")
 

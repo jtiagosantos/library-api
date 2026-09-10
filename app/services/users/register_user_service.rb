@@ -1,10 +1,10 @@
 class Users::RegisterUserService < BaseService
   ALLOWD_STATUS = [ "active", "blocked" ]
 
-  def call(params)
-    status = params[:status] || "active"
-    email = params[:email]
-    username = params[:username]
+  def call(input)
+    status = input[:status] || "active"
+    email = input[:email]
+    username = input[:username]
 
     add_error(Users::InvalidUserStatusError.new) if is_invalid_status?(status)
 

@@ -1,6 +1,6 @@
 class Books::UpdateBookService < BaseService
-  def call(params)
-    id = params[:id]
+  def call(input)
+    id = input[:id]
 
     book = Book.find_by(id: id)
 
@@ -8,7 +8,7 @@ class Books::UpdateBookService < BaseService
 
     return failed if exists_error?
 
-    updated_values = { **book.serializable_hash, **params.except(:id) }.symbolize_keys
+    updated_values = { **book.serializable_hash, **input.except(:id) }.symbolize_keys
 
     total_copies = updated_values[:total_copies]
     available_copies = updated_values[:available_copies]

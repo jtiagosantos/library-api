@@ -2,9 +2,9 @@ class Loans::LendABookService < BaseService
   ACTIVE_USER_STATUS = "active"
   MAXIMUM_ACTIVE_LOANS_PER_USER = 3
 
-  def call(params)
-    user_id = params[:user_id]
-    book_id = params[:book_id]
+  def call(input)
+    user_id = input[:user_id]
+    book_id = input[:book_id]
 
     user = User.find_by(id: user_id)
 
