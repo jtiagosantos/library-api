@@ -1,5 +1,5 @@
-class Users::InactiveUserError < BusinessError
+class Users::InactiveUserError < StandardError
   def initialize
-    super("User must be active", code: :unprocessable_entity)
+    super("User must be active")
   end
 end

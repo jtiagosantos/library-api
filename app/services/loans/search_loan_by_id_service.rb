@@ -1,9 +1,13 @@
-class Loans::SearchLoanByIdService
+class Loans::SearchLoanByIdService < BaseService
   def call(params)
-    loan = Loan.find_by(id: params[:id])
+    id = params[:id]
 
-    raise EntityNotFoundError.new unless loan
+    loan = Loan.find_by(id: id)
 
-    loan
+    add_error(EntityNotFoundError.new) unless loan
+
+    return failed if exists_error?
+
+    success(loan)
   end
 end

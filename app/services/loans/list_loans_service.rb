@@ -1,4 +1,4 @@
-class Loans::ListLoansService
+class Loans::ListLoansService < BaseService
   def call(params)
     user_id = params[:user_id]
     book_id = params[:book_id]
@@ -19,6 +19,6 @@ class Loans::ListLoansService
     loans = loans.filter_by_book(book_id) if book_id.present?
     loans = loans.filter_by_status(status) if status.present?
 
-    loans
+    success(loans)
   end
 end

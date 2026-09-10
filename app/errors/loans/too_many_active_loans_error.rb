@@ -1,5 +1,5 @@
-class Loans::TooManyActiveLoansError < BusinessError
+class Loans::TooManyActiveLoansError < StandardError
   def initialize
-    super("User has too many active loans", code: :unprocessable_entity)
+    super("User has too many active loans")
   end
 end

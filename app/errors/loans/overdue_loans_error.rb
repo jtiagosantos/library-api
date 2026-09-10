@@ -1,5 +1,5 @@
-class Loans::OverdueLoansError < BusinessError
+class Loans::OverdueLoansError < StandardError
   def initialize
-    super("User has overdue loans", code: :unprocessable_entity)
+    super("User has overdue loans")
   end
 end

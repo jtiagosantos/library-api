@@ -158,7 +158,7 @@
 
 ## Resposta de sucesso
 
-- [ ] Padronizar formato:
+- [x] Padronizar formato:
 
 ```json
 {

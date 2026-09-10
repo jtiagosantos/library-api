@@ -29,7 +29,7 @@ class UsersApi < Api
       requires :id, type: Integer, desc: "User's ID"
     end
     get "/:id" do
-      Users::SearchUserByIdService.new.call(params[:id]) => { data:, errors: }
+      Users::SearchUserByIdService.new.call(params) => { data:, errors: }
 
       return render_failed(errors=errors, status=:not_found) if errors.any?
 

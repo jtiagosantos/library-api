@@ -1,4 +1,6 @@
 class LoansApi < Api
+  helpers ::Helpers::ResponseHelper
+
   resource :loans do
     desc "Lend a book to a user"
     params do
@@ -6,12 +8,20 @@ class LoansApi < Api
       requires :book_id, type: Integer, desc: "Book ID"
     end
     post do
-      Loans::LendABookService.new.call(params)
+      Loans::LendABookService.new.call(params) => { data:, errors: }
+
+      return render_failed(errors=errors) if errors.any?
+
+      render_success(data=data, status=:created)
     end
 
     desc "List all loans"
     get do
-      Loans::ListLoansService.new.call(params)
+      Loans::ListLoansService.new.call(params) => { data:, errors: }
+
+      return render_failed(errors=errors) if errors.any?
+
+      render_success(data=data)
     end
 
     desc "Return a book"
@@ -19,7 +29,11 @@ class LoansApi < Api
       requires :id, type: Integer, desc: "Loan ID"
     end
     patch "/:id/return" do
-      Loans::ReturnBookService.new.call(params)
+      Loans::ReturnBookService.new.call(params) => { data:, errors: }
+
+      return render_failed(errors=errors) if errors.any?
+
+      render_success(data=data)
     end
 
     desc "Search a loan by ID"
@@ -27,7 +41,11 @@ class LoansApi < Api
       requires :id, type: Integer, desc: "Loan ID"
     end
     get "/:id" do
-      Loans::SearchLoanByIdService.new.call(params)
+      Loans::SearchLoanByIdService.new.call(params) => { data:, errors: }
+
+      return render_failed(errors=errors) if errors.any?
+
+      render_success(data=data, status=:not_found)
     end
   end
 end
