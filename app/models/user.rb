@@ -3,7 +3,7 @@ class User < ApplicationRecord
   MAXIMUM_ACTIVE_LOANS = 3
 
   validates :username, :email, :status, presence: true
-  validates :email, uniqueness: true
+  validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   enum :status, { active: "active", blocked: "blocked" }
 
