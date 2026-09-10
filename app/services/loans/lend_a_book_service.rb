@@ -65,11 +65,11 @@ class Loans::LendABookService < BaseService
     end
 
     def user_has_too_many_loans?(user)
-      user.loans.count >= MAXIMUM_ACTIVE_LOANS_PER_USER
+      user.loans.where(status: "active").count >= MAXIMUM_ACTIVE_LOANS_PER_USER
     end
 
     def user_has_already_borrowed_book?(user, book)
-      user.loans.exists?(book_id: book.id)
+      user.loans.exists?("book_id = ? AND status = ?", book.id, "active")
     end
 
     def user_has_overdue_loans?(user)
