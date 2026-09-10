@@ -7,18 +7,6 @@ class Books::RegisterBookService < BaseService
     description = input[:description]
     published_at = input[:published_at]
 
-    existsBook = Book.exists?(isbn: isbn)
-
-    add_error(Books::IsbnAlreadyRegisteredError.new) if existsBook
-
-    add_error(Books::TotalCopiesCannotBeLessThanZeroError.new) if total_copies <= 0
-
-    add_error(Books::AvailableCopiesCannotBeGreaterThanTotalCopiesError.new) if available_copies > total_copies
-
-    add_error(Books::AvailableCopiesCannotBeNegativeError.new) if available_copies < 0
-
-    return failed if exists_error?
-
     book = Book.create!(
       title: title,
       isbn: isbn,
@@ -29,5 +17,8 @@ class Books::RegisterBookService < BaseService
     )
 
     success(book)
+  rescue => error
+    add_error(error)
+    failed
   end
 end
