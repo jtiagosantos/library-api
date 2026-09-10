@@ -14,4 +14,12 @@ class Book < ApplicationRecord
   }
 
   scope :filter_by_isbn, ->(isbn) { where("isbn = ?", isbn) }
+
+  def is_book_available?
+    available_copies > 0
+  end
+
+  def is_book_unavailable?
+    available_copies == 0
+  end
 end

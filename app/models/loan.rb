@@ -13,4 +13,8 @@ class Loan < ApplicationRecord
   scope :filter_by_book, ->(book_id) { where(book_id: book_id) }
 
   scope :filter_by_status, ->(status) { where(status: status) }
+
+  def returned?
+    status == "returned"
+  end
 end

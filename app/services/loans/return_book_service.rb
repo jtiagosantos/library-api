@@ -9,7 +9,7 @@ class Loans::ReturnBookService < BaseService
       return failed
     end
 
-    add_error(Loans::LoanAlreadyReturnedError.new) if is_loan_returned?(loan)
+    add_error(Loans::LoanAlreadyReturnedError.new) if loan.returned?
 
     return failed if exists_error?
 
@@ -31,10 +31,8 @@ class Loans::ReturnBookService < BaseService
     return failed if exists_error?
 
     success(result)
+  rescue => error
+    add_error(error)
+    failed
   end
-
-  private
-    def is_loan_returned?(loan)
-      loan.status == "returned"
-    end
 end
