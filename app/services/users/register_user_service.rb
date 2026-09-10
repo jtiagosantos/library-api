@@ -1,14 +1,8 @@
 class Users::RegisterUserService < BaseService
-  ALLOWD_STATUS = [ "active", "blocked" ]
-
   def call(input)
     status = input[:status] || "active"
     email = input[:email]
     username = input[:username]
-
-    add_error(Users::InvalidUserStatusError.new) if is_invalid_status?(status)
-
-    add_error(Users::EmailAlreadyRegisteredError.new) if user_exists?(email)
 
     return failed if exists_error?
 
@@ -19,14 +13,8 @@ class Users::RegisterUserService < BaseService
     )
 
     success(user)
+  rescue => error
+    add_error(error)
+    failed
   end
-
-  private
-    def is_invalid_status?(status)
-      status && !ALLOWD_STATUS.include?(status)
-    end
-
-    def user_exists?(email)
-      User.exists?(email: email)
-    end
 end
