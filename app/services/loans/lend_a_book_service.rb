@@ -20,7 +20,7 @@ class Loans::LendABookService < BaseService
       return failed
     end
 
-    if book.is_book_unavailable?
+    if book.is_unavailable?
       add_error(Books::UnavailableBookError.new)
       return failed
     end
